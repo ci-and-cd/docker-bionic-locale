@@ -5,8 +5,10 @@ FROM ubuntu:18.04
 ARG IMAGE_ARG_APT_MIRROR
 
 ARG IMAGE_ARG_ENCODING
+ARG IMAGE_ARG_LANGUAGE
 ARG IMAGE_ARG_LOCALE
-
+ARG IMAGE_ARG_REGION
+#ARG IMAGE_ARG_TZ
 ARG IMAGE_ARG_TZ_AREA
 ARG IMAGE_ARG_TZ_ZONE
 
@@ -15,6 +17,7 @@ COPY --chown=root:root docker /data
 
 
 RUN set -ex \
+    && echo ===== Set locale ===== \
     && echo "tzdata tzdata/Areas select ${IMAGE_ARG_TZ_AREA:-Etc}\n\
 tzdata tzdata/Zones/${IMAGE_ARG_TZ_AREA:-Etc} select ${IMAGE_ARG_TZ_ZONE:-UTC}\n\n\
 locales locales/locales_to_be_generated    multiselect ${IMAGE_ARG_LOCALE:-en_US}.${IMAGE_ARG_ENCODING:-UTF-8} ${IMAGE_ARG_ENCODING:-UTF-8}\n\
