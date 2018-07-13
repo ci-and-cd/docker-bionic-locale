@@ -15,7 +15,7 @@ services:
       #- IMAGE_ARG_TZ=${IMAGE_ARG_TZ:-UTC+8:00}
       - IMAGE_ARG_TZ_AREA=${IMAGE_ARG_TZ_AREA:-Asia}
       - IMAGE_ARG_TZ_ZONE=${IMAGE_ARG_TZ_ZONE:-Shanghai}
-    image: ${IMAGE_PREFIX:-cirepo}/${IMAGE_NAME:-bionic-locale}:${IMAGE_TAG:-zh_CN.UTF-8_Asia.Shanghai}
+    image: ${IMAGE_PREFIX:-cirepo}/${IMAGE_NAME:-locale}:${IMAGE_TAG:-zh_CN.UTF-8_Asia.Shanghai-bionic}
   #docker-compose build dumper
   dumper:
     build:
@@ -27,4 +27,4 @@ services:
     build:
       context: .
       dockerfile: Dockerfile_archive
-    image: ${IMAGE_PREFIX:-cirepo}/${IMAGE_NAME:-bionic-locale}:${IMAGE_TAG:-zh_CN.UTF-8_Asia.Shanghai}-archive
+    image: ${IMAGE_PREFIX:-cirepo}/${IMAGE_NAME:-locale}:${IMAGE_TAG:-zh_CN.UTF-8_Asia.Shanghai-bionic}-archive
