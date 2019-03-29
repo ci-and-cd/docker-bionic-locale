@@ -11,11 +11,11 @@ for layer in $(pwd)/data/image/*/layer.tar; do
     for element in $(tar -tf ${layer} | grep -E '^dev/.*' | sort -r -n); do echo delete ${element}; tar --delete -f ${layer} "${element}" || echo error on delete ${element}; done
     #for element in $(tar -tf ${layer} | grep -E '^etc/'   | sort -r -n); do echo delete ${element}; tar --delete -f ${layer} "${element}" || echo error on delete ${element}; done
 
-    if [ -n "$(tar -tf ${layer} | grep 'etc/timezone')" ]; then echo found etc/timezone in ${layer}; LAYERS+=(${layer}); fi
+    if [[ -n "$(tar -tf ${layer} | grep 'etc/timezone')" ]]; then echo found etc/timezone in ${layer}; LAYERS+=(${layer}); fi
 done
 
 echo -e "merge layers '${LAYERS[@]}' into one\n"
-if [ ${#LAYERS[@]} -gt 0 ]; then tar Af ${LAYERS[@]}; fi
+if [[ ${#LAYERS[@]} -gt 0 ]]; then tar Af ${LAYERS[@]}; fi
 echo -e "layers merged into ${LAYERS[0]} $(du -sh ${LAYERS[0]})\n"
 
 echo copy ${LAYERS[0]} to $(pwd)/data/layer.tar
@@ -26,7 +26,7 @@ tar_entries=($(tar tf data/layer.tar))
 tar_directories=($(tar tf data/layer.tar | grep -E '.*/$' | sort -r -n))
 tar_empty_directories=()
 for directory in ${tar_directories[@]}; do
-    if [ -z "$(printf -- '%s\n' "${tar_entries[@]}" | grep -E "${directory}.+")" ]; then tar_empty_directories+=(${directory}); fi
+    if [[ -z "$(printf -- '%s\n' "${tar_entries[@]}" | grep -E "${directory}.+")" ]]; then tar_empty_directories+=(${directory}); fi
 done
 echo tar_empty_directories
 printf -- '%s\n' "${tar_empty_directories[@]}"
@@ -39,3 +39,7 @@ rm -rf /data/root/etc/apt
 rm -rf /data/root/var/cache/apt
 rm -rf /data/root/var/lib/apt
 rm -rf /data/root/var/log
+
+echo '>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Files >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>'
+find /data/root -name '*' | sed 's|^/data/root||'
+echo '<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Files <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<'

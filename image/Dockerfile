@@ -30,6 +30,11 @@ locales locales/default_environment_locale select      ${IMAGE_ARG_LOCALE:-en_US
     && dpkg-reconfigure -f noninteractive tzdata \
     && echo "${IMAGE_ARG_LOCALE:-en_US}.${IMAGE_ARG_ENCODING:-UTF-8} ${IMAGE_ARG_ENCODING:-UTF-8}" > /etc/locale.gen \
     && dpkg-reconfigure -f noninteractive locales \
+    && if [ "${IMAGE_ARG_LOCALE:-en_US}" != "C" ]; then \
+         locale-gen ${IMAGE_ARG_LOCALE:-en_US}.${IMAGE_ARG_ENCODING:-UTF-8}; \
+         echo 'Update /etc/default/locale'; \
+         update-locale LANG=${IMAGE_ARG_LOCALE:-en_US}.${IMAGE_ARG_ENCODING:-UTF-8}; \
+       fi \
     && apt-get -q -y autoremove \
     && apt-get -q -y clean && rm -rf /var/lib/apt/lists/* && rm -f /var/cache/apt/*.bin
 
