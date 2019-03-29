@@ -34,10 +34,11 @@ locales locales/default_environment_locale select      ${IMAGE_ARG_LOCALE:-en_US
          locale-gen ${IMAGE_ARG_LOCALE:-en_US}.${IMAGE_ARG_ENCODING:-UTF-8}; \
          echo 'Update /etc/default/locale'; \
          update-locale LANG=${IMAGE_ARG_LOCALE:-en_US}.${IMAGE_ARG_ENCODING:-UTF-8}; \
+         update-locale LC_ALL=${IMAGE_ARG_LOCALE:-en_US}.${IMAGE_ARG_ENCODING:-UTF-8}; \
        fi \
     && apt-get -q -y autoremove \
     && apt-get -q -y clean && rm -rf /var/lib/apt/lists/* && rm -f /var/cache/apt/*.bin
 
-
-ENV LANG ${IMAGE_ARG_LOCALE:-en_US}.${IMAGE_ARG_ENCODING:-UTF-8}
-ENV LC_ALL ${IMAGE_ARG_LOCALE:-en_US}.${IMAGE_ARG_ENCODING:-UTF-8}
+# Do not set LANG or LC_ALL by ENV instruction or you will get "/bin/bash: warning: setlocale: LC_ALL: cannot change locale"
+#ENV LANG ${IMAGE_ARG_LOCALE:-en_US}.${IMAGE_ARG_ENCODING:-UTF-8}
+#ENV LC_ALL ${IMAGE_ARG_LOCALE:-en_US}.${IMAGE_ARG_ENCODING:-UTF-8}
