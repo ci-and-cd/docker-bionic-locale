@@ -39,6 +39,6 @@ locales locales/default_environment_locale select      ${IMAGE_ARG_LOCALE:-en_US
     && apt-get -q -y autoremove \
     && apt-get -q -y clean && rm -rf /var/lib/apt/lists/* && rm -f /var/cache/apt/*.bin
 
-# Do not set LANG or LC_ALL by ENV instruction or you will get "/bin/bash: warning: setlocale: LC_ALL: cannot change locale"
+# Do not set LANG or LC_ALL by ENV instruction under ubuntu bionic or you will get "/bin/bash: warning: setlocale: LC_ALL: cannot change locale"
 #ENV LANG ${IMAGE_ARG_LOCALE:-en_US}.${IMAGE_ARG_ENCODING:-UTF-8}
 #ENV LC_ALL ${IMAGE_ARG_LOCALE:-en_US}.${IMAGE_ARG_ENCODING:-UTF-8}
